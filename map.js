@@ -40,6 +40,8 @@ const NovaLista = ListaAlunos.map((alunos)=>{
      }
 })
 
+console.log(NovaLista)
+
 const students = [
   { name: 'Rodolfo', testGrade: 7 },
   { name: 'Maria', testGrade: 5 },
@@ -53,7 +55,7 @@ const students = [
 const aprovados = students.map(alunos =>{
   return {
     name: alunos.name,
-    aprovados: alunos.testGrade > 6 ? 'aprovado(a)' : 'reprovado' 
+    aprovados: alunos.testGrade > 5 ? 'aprovado(a)' : 'reprovado(a)' 
   }
 })
 
