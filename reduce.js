@@ -6,62 +6,66 @@ const carrinho = [
   { productName: 'Morango', valuePerKg: 11.9, kg: 3 },
 ];
 
-const Pagamento = carrinho.reduce((result, produto)=>{
-const ValorProduto = produto.valuePerKg  * produto.kg
-return result + ValorProduto
-},0)
+const Pagamento = carrinho.reduce((result, produto) => {
+  const ValorProduto = produto.valuePerKg * produto.kg
+  return result + ValorProduto
+}, 0)
 
 console.log(`A compra no total está em: ${Pagamento.toFixed(2)}`)
 
-const orders = [
-  {
-    orderId: 'A001',
-    customerName: 'Ana Silva',
-    items: [
-      { productId: 'P001', name: 'Notebook Pro X', category: 'Eletrônicos', price: 1500.00, quantity: 1 },
-      { productId: 'P005', name: 'Mouse Gamer', category: 'Eletrônicos', price: 75.50, quantity: 2 }
-    ],
-    status: 'Concluído',
-    orderDate: '2024-06-10'
-  },
-  {
-    orderId: 'A002',
-    customerName: 'Bruno Costa',
-    items: [
-      { productId: 'P003', name: 'Cadeira Ergonômica', category: 'Móveis', price: 300.00, quantity: 1 },
-      { productId: 'P002', name: 'Monitor Ultrawide', category: 'Eletrônicos', price: 800.00, quantity: 1 }
-    ],
-    status: 'Pendente',
-    orderDate: '2024-06-12'
-  },
-  {
-    orderId: 'A003',
-    customerName: 'Carla Dias',
-    items: [
-      { productId: 'P004', name: 'Teclado Mecânico', category: 'Eletrônicos', price: 120.00, quantity: 1 },
-      { productId: 'P001', name: 'Notebook Pro X', category: 'Eletrônicos', price: 1500.00, quantity: 1 }
-    ],
-    status: 'Concluído',
-    orderDate: '2024-06-15'
-  },
-  {
-    orderId: 'A004',
-    customerName: 'Daniel Rocha',
-    items: [
-      { productId: 'P006', name: 'Webcam HD', category: 'Eletrônicos', price: 50.00, quantity: 3 },
-      { productId: 'P007', name: 'Fone de Ouvido', category: 'Eletrônicos', price: 90.00, quantity: 1 }
-    ],
-    status: 'Cancelado',
-    orderDate: '2024-06-18'
-  },
-  {
-    orderId: 'A005',
-    customerName: 'Eva Souza',
-    items: [
-      { productId: 'P008', name: 'Mesa para Escritório', category: 'Móveis', price: 250.00, quantity: 1 }
-    ],
-    status: 'Concluído',
-    orderDate: '2024-06-20'
-  }
+
+
+const productsInStock = [
+  { id: 'P001', name: 'Caneta Esferográfica', category: 'Papelaria', price: 2.50, stock: 150, lastSold: '2025-07-10' },
+  { id: 'P002', name: 'Caderno Universitário', category: 'Papelaria', price: 15.00, stock: 80, lastSold: '2025-07-12' },
+  { id: 'P003', name: 'Mouse Sem Fio', category: 'Eletrônicos', price: 45.90, stock: 50, lastSold: '2025-07-08' },
+  { id: 'P004', name: 'Teclado Mecânico', category: 'Eletrônicos', price: 180.00, stock: 20, lastSold: '2025-07-14' },
+  { id: 'P005', name: 'Bolsa para Notebook', category: 'Acessórios', price: 70.00, stock: 30, lastSold: '2025-07-05' },
+  { id: 'P006', name: 'Fone de Ouvido Bluetooth', category: 'Eletrônicos', price: 120.00, stock: 65, lastSold: '2025-07-13' },
+  { id: 'P007', name: 'Mochila Escolar', category: 'Acessórios', price: 95.00, stock: 40, lastSold: '2025-07-11' },
+  { id: 'P008', name: 'Marcador de Texto', category: 'Papelaria', price: 4.00, stock: 200, lastSold: '2025-07-09' },
 ];
 
+const ValorTotal = productsInStock.reduce((ValorStock, Stock) => {
+  return ValorStock + (Stock.price * Stock.stock)
+}, 0)
+
+const ValorPapelaria = productsInStock.reduce((ValorStock, Stock) => {
+  if (Stock.category == 'Papelaria') {
+    papelaria = ValorStock +  Stock.stock
+  }
+  return papelaria
+}, 0);
+
+const ValorEletronico = productsInStock.reduce((ValorStock,Stock) =>{
+  if (Stock.category !='Eletrônicos'){
+    return ValorStock + 0
+  }else{
+    return ValorStock +  Stock.stock
+  }
+  
+},0)
+
+const ValorAcessorios = productsInStock.reduce((ValorStock,Stock) =>{
+  if (Stock.category !='Acessórios'){
+    return ValorStock + 0
+  }else{
+    return ValorStock +  Stock.stock
+  }
+  
+},0)
+
+function MaiorValor(){
+ if(ValorPapelaria > ValorAcessorios && ValorPapelaria > ValorEletronico ){
+    return ValorPapelaria
+ }else if(ValorEletronico > ValorPapelaria && ValorEletronico > ValorAcessorios){
+  return ValorEletronico
+ }else if(ValorAcessorios > ValorPapelaria && ValorAcessorios > ValorEletronico){
+   return ValorAcessorios
+ }
+}
+console.log(`O valor total em estoque é de: ${ValorTotal}`)
+console.log(`No estoque Papelaria temos: ${ValorPapelaria}`)
+console.log(`No estoque Eletronico temos: ${ValorEletronico}`)
+console.log(`No estoque Acessorios temos: ${ValorAcessorios}`)
+console.log(`O maior valor é de ${MaiorValor()}`)
