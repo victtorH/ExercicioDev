@@ -50,3 +50,36 @@ const orders = [
     orderDate: '2024-06-20'
   }
 ];
+
+const Concluidos = orders.filter(list =>{
+  if(list.status == 'Concluído'){
+    return true
+  }else{
+     return false
+  }
+})
+
+const TotalPedidos = Concluidos.map((pedido)=>{
+  return {
+    orderId: pedido.orderId,
+    totalPedido: pedido.items.reduce((valor,item )=>{
+      return valor + item.price * item.quantity
+    },0)
+
+  }
+})
+
+const TotalLoja = TotalPedidos.reduce((Faturamento, Valorpedido)=>{
+      return Faturamento + Valorpedido.totalPedido
+},0)
+
+console.log("Total de pedidos:")
+console.log(orders)
+
+console.log("Pedidos concluidos:")
+console.log(Concluidos)
+
+console.log("Total de cada pedido:")
+console.log(TotalPedidos)
+
+console.log(`faturamento mês: ${TotalLoja}`)
