@@ -51,15 +51,18 @@ const orders = [
   }
 ];
 
-const Concluidos = orders.filter(list =>{
+
+
+
+ const pedidosConcluidos = list =>{
   if(list.status == 'Concluído'){
     return true
   }else{
      return false
   }
-})
+}
 
-const TotalPedidos = Concluidos.map((pedido)=>{
+const Totalpedidos = (pedido)=>{
   return {
     orderId: pedido.orderId,
     totalPedido: pedido.items.reduce((valor,item )=>{
@@ -67,19 +70,33 @@ const TotalPedidos = Concluidos.map((pedido)=>{
     },0)
 
   }
-})
+}
 
-const TotalLoja = TotalPedidos.reduce((Faturamento, Valorpedido)=>{
+const faturamento = (Faturamento, Valorpedido)=>{
       return Faturamento + Valorpedido.totalPedido
-},0)
+}
 
-console.log("Total de pedidos:")
-console.log(orders)
+const Concluidos = orders
+.filter(pedidosConcluidos)
+.map(Totalpedidos)
+.reduce(faturamento,0)
 
-console.log("Pedidos concluidos:")
-console.log(Concluidos)
+console.log(`faturamento mês: ${Concluidos}`)
+ 
+orders.push({
+  orderId: 'A006', 
+  customerName: 'João Oliveira',
+  items: [
+    { productId: 'P012', name: 'Monitor LED 24 polegadas', category: 'Eletrônicos', price: 750.00, quantity: 2 },
+    { productId: 'P001', name: 'Teclado Mecânico', category: 'Periféricos', price: 180.00, quantity: 1 }
+  ],
+  status: 'Concluído',
+  orderDate: '2025-07-15',
+});
 
-console.log("Total de cada pedido:")
-console.log(TotalPedidos)
+const Newconcluidos = orders
+.filter(pedidosConcluidos)
+.map(Totalpedidos)
+.reduce(faturamento,0)
 
-console.log(`faturamento mês: ${TotalLoja}`)
+console.log(`faturamento mês: ${Newconcluidos}`)
